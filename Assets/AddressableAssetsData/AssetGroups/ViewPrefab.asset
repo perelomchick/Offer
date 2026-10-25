@@ -1,0 +1,43 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bbb281ee3bf0b054c82ac2347e9e782c, type: 3}
+  m_Name: ViewPrefab
+  m_EditorClassIdentifier: Unity.Addressables.Editor::UnityEditor.AddressableAssets.Settings.AddressableAssetGroup
+  m_GroupName: ViewPrefab
+  m_GUID: 61f207bd24ac63344b8e43b90942dbc4
+  m_SerializeEntries:
+  - m_GUID: 63fc2651f681452468e725b1bdb25077
+    m_Address: ViewPrefab/ResourceView
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 824386ff8d071384095053de29ca1b64
+    m_Address: ViewPrefab/EventWindowUI
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: b1f6f895f129b0749951190220f97f1c
+    m_Address: ViewPrefab/OfferView
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: da03eeb1c1df51247a34dccec5e85cc7
+    m_Address: ViewPrefab/EventView
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  m_ReadOnly: 0
+  m_Settings: {fileID: 11400000, guid: b508d894f24b9ce47b4a4c7ee043c163, type: 2}
+  m_SchemaSet:
+    m_Schemas:
+    - {fileID: 11400000, guid: 623c8b82d3691cd41b73e4c137c25032, type: 2}
+    - {fileID: 11400000, guid: 357127527d29d4749992d5413a1a6045, type: 2}

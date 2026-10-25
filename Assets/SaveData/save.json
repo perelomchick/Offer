@@ -1,0 +1,26 @@
+{
+    "PurchasedOffers": [
+        "3:4",
+        "3:3",
+        "3:2",
+        "3:1"
+    ],
+    "Resources": [
+        {
+            "Type": 3,
+            "Amount": 70
+        },
+        {
+            "Type": 1,
+            "Amount": 70
+        },
+        {
+            "Type": 2,
+            "Amount": 60
+        },
+        {
+            "Type": 4,
+            "Amount": 62
+        }
+    ]
+}

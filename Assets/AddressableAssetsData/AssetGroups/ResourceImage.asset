@@ -1,0 +1,48 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bbb281ee3bf0b054c82ac2347e9e782c, type: 3}
+  m_Name: ResourceImage
+  m_EditorClassIdentifier: Unity.Addressables.Editor::UnityEditor.AddressableAssets.Settings.AddressableAssetGroup
+  m_GroupName: ResourceImage
+  m_GUID: a2e7eec29c5655a43a60feecf0bde53a
+  m_SerializeEntries:
+  - m_GUID: 150dfcdd00485f64dae63e7a68d7f97b
+    m_Address: ResourcesImage/Wood
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 1d4f8014c039f5142a972d188467f1b8
+    m_Address: ResourcesImage/Iron
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 5cddd26d7e452074d964f6716b35e6f5
+    m_Address: ResourcesImage/Stone
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 7edb84fdb581c9840ac0b11326197c9d
+    m_Address: ResourcesImage/Diamond
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 8441a7990003b7a40bffa7492a9f0bfc
+    m_Address: ResourcesImage/Gold
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  m_ReadOnly: 0
+  m_Settings: {fileID: 11400000, guid: b508d894f24b9ce47b4a4c7ee043c163, type: 2}
+  m_SchemaSet:
+    m_Schemas:
+    - {fileID: 11400000, guid: 1f570749474f83e4295bc3d469753983, type: 2}
+    - {fileID: 11400000, guid: 8de347a2b4bc0cd468618b73b44ed3ff, type: 2}

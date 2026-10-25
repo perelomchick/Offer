@@ -1,0 +1,72 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 65fc84c14bcb49be9c27b580f7438982, type: 3}
+  m_Name: ThreeEvent
+  m_EditorClassIdentifier: Assembly-CSharp::OfferCore.Events.Data.EventData
+  ID: 3
+  TimeStartEvent:
+    Year: 2026
+    Month: 10
+    Day: 25
+    Hour: 4
+    Minute: 0
+    Second: 23
+    OffsetMinutes: 5
+  TimeEndEvent:
+    Year: 2026
+    Month: 10
+    Day: 25
+    Hour: 20
+    Minute: 0
+    Second: 0
+    OffsetMinutes: 5
+  Offers:
+  - ID: 1
+    Description: Stabdart Descriptioon
+    Price:
+      Type: 4
+      Amount: 2
+    Rewards:
+    - Type: 1
+      Amount: 20
+    - Type: 1
+      Amount: 40
+  - ID: 2
+    Description: Stabdart Descriptioon
+    Price:
+      Type: 4
+      Amount: 2
+    Rewards:
+    - Type: 2
+      Amount: 20
+    - Type: 2
+      Amount: 40
+  - ID: 3
+    Description: Stabdart Descriptioon
+    Price:
+      Type: 4
+      Amount: 2
+    Rewards:
+    - Type: 3
+      Amount: 20
+    - Type: 3
+      Amount: 40
+  - ID: 4
+    Description: Stabdart Descriptioon
+    Price:
+      Type: 4
+      Amount: 2
+    Rewards:
+    - Type: 4
+      Amount: 20
+    - Type: 4
+      Amount: 40
