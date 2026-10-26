@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Threading;
 using System.Threading.Tasks;
 using Cysharp.Threading.Tasks;
 using OfferCore.Data;
@@ -15,7 +16,9 @@ namespace OfferCore.Common
 
         private Dictionary<TypeResource,Sprite> _resourceSprites ;
         private Dictionary<ViewEnum,GameObject> _viewPrefabs;
-
+        
+        private int _loadedCount;
+        private int _totalCount;
 
         public Sprite GetSpriteResource(TypeResource type)  {
             if (_resourceSprites.TryGetValue(type, out Sprite prefab))
@@ -37,13 +40,17 @@ namespace OfferCore.Common
             return prefab;
         }
         
-        public async UniTask<Unit> LoadPrefabs(Action onLoaded = null,Action <float> onProgress = null)
+        public async UniTask LoadPrefabsAsync(IProgress<float> progress = null, CancellationToken ct = default)
         {
-            _resourceSprites = await LoadAddressableByEnum<TypeResource, Sprite>(PATH_TO_ADDRESS_RESOURECES, 2, onProgress);
-            _viewPrefabs = await LoadAddressableByEnum<ViewEnum, GameObject>(PATH_TO_VIEW_PREFABS, 2, onProgress);
-           
-            onLoaded?.Invoke();
-            return default;
+            _loadedCount = 0;
+            _totalCount = Enum.GetValues(typeof(TypeResource)).Length
+                          + Enum.GetValues(typeof(ViewEnum)).Length;
+
+            _resourceSprites = await LoadAddressableByEnum<TypeResource, Sprite>(
+                PATH_TO_ADDRESS_RESOURECES, progress, ct);
+
+            _viewPrefabs = await LoadAddressableByEnum<ViewEnum, GameObject>(
+                PATH_TO_VIEW_PREFABS, progress, ct);
         }
 
         public void Dispose()
@@ -58,27 +65,26 @@ namespace OfferCore.Common
             _viewPrefabs.Clear();
         }
 
-        private async Task<Dictionary<TKey, TValue>> LoadAddressableByEnum<TKey, TValue>(
+        private async UniTask<Dictionary<TKey, TValue>> LoadAddressableByEnum<TKey, TValue>(
             string path,
-            int countOperation,
-            Action<float> onProgress = null
-            ) where TValue : UnityEngine.Object
+            IProgress<float> progress,
+            CancellationToken ct) where TValue : UnityEngine.Object
         {
             var container = new Dictionary<TKey, TValue>();
-            var enumKeys = (TKey[])System.Enum.GetValues(typeof(TKey));
-            var numbersLoading = countOperation * enumKeys.Length;
-            
+            var enumKeys = (TKey[])Enum.GetValues(typeof(TKey));
+
             foreach (var enumKey in enumKeys)
             {
-                var value = await AddressableLoader
-                    .LoadAssetByAddress<TValue>(
-                        path + enumKey,
-                        onProgress: x => onProgress?.Invoke(x / numbersLoading)
-                    );
+                ct.ThrowIfCancellationRequested();
 
-                container[enumKey] = value;
+                container[enumKey] = await AddressableLoader.LoadAssetByAddress<TValue>(
+                    path + enumKey,
+                    onProgress: x => progress?.Report((_loadedCount + x) / _totalCount));
+
+                _loadedCount++;
+                progress?.Report(_loadedCount / (float)_totalCount);
             }
-            
+
             return container;
         }
     }

@@ -1,4 +1,5 @@
-﻿using OfferCore.Common;
+﻿using Cysharp.Threading.Tasks;
+using OfferCore.Common;
 using OfferCore.Events.Data;
 using OfferCore.Events.Services;
 using UnityEngine;
@@ -14,30 +15,33 @@ namespace OfferCore
         [SerializeField] private Transform _eventParent;
         
         [SerializeField] private EventData[] eventData;
-        
-        AddressableContainer _addressableContainer;
+
+        private LoadingCurtainView _loadingCurtainView;
+        private AddressableContainer _addressableContainer;
         private EventService _eventService;
         private Inventory _inventory;
 
         [Inject]
-        public void Init(AddressableContainer addressableContainer,EventService eventService, Inventory inventory)
+        public void Init(AddressableContainer addressableContainer,
+            EventService eventService,
+            Inventory inventory,
+            LoadingCurtainView loadingCurtainView)
         {
+            Debug.Log("[Test] Init Main");
             _addressableContainer = addressableContainer;
             _eventService = eventService;
             _inventory = inventory;
-            _addressableContainer.LoadPrefabs(() => StartGame());
+            _loadingCurtainView = loadingCurtainView;
+            
+            StartGame();
+            
+            _loadingCurtainView.Hide(destroyCancellationToken).Forget();
         }
 
         private void StartGame()
         {
             _eventService.StartEvent(eventData,_eventParent);
             _resourceUI.Init(_inventory, _addressableContainer);
-        }
-
-        private void OnDestroy()
-        {
-            _addressableContainer.Dispose();
-            _eventService.Dispose();
         }
     }
 }
