@@ -16,7 +16,7 @@ MonoBehaviour:
   TimeStartEvent:
     Year: 2026
     Month: 10
-    Day: 25
+    Day: 27
     Hour: 2
     Minute: 30
     Second: 0
@@ -24,7 +24,7 @@ MonoBehaviour:
   TimeEndEvent:
     Year: 2026
     Month: 10
-    Day: 25
+    Day: 27
     Hour: 22
     Minute: 20
     Second: 0
