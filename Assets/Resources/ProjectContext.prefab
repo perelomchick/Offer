@@ -111,7 +111,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f27485f71b614a2282c987270ec30100, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::OfferCore.ProjectInstaller
-  loadingCurtainView: {fileID: 5942010578187136250}
+  loadingCurtainUI: {fileID: 5942010578187136250}
 --- !u!1 &3875043473185905869
 GameObject:
   m_ObjectHideFlags: 0

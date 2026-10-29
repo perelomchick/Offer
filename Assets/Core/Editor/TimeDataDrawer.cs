@@ -1,5 +1,5 @@
 ﻿#if UNITY_EDITOR
-using Core.Data;
+using Core.Features.TimeClock.Data;
 using UnityEditor;
 using UnityEngine;
 
