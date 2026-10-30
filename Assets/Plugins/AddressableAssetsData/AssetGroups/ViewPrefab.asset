@@ -30,6 +30,11 @@ MonoBehaviour:
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: d1462807073685249ae8139e59a64e7d
+    m_Address: ViewPrefab/InventoryUI
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: da03eeb1c1df51247a34dccec5e85cc7
     m_Address: ViewPrefab/EventView
     m_ReadOnly: 0

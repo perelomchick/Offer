@@ -1,5 +1,6 @@
 ﻿using Core.Features.Economy.UI;
 using Core.Features.Events.Data;
+using Core.Infrastructure.AssetManager.Data;
 using Core.Infrastructure.AssetManager.Services;
 using Core.Resources;
 using Cysharp.Threading.Tasks;
@@ -12,11 +13,10 @@ namespace Core.App
 {
     public class GameBootstrap : MonoBehaviour
     {
-        [SerializeField] private ResourceUI _resourceUI;
         [SerializeField] private Transform _eventParent;
-        
         [SerializeField] private EventData[] eventData;
-
+        
+        private InventoryUI _inventoryUI;
         private LoadingCurtainUI _loadingCurtainUI;
         private AddressableContainer _addressableContainer;
         private EventService _eventService;
@@ -40,8 +40,11 @@ namespace Core.App
 
         private void StartGame()
         {
+            var ui = _addressableContainer.GetViewPrefab<InventoryUI>(UiElements.InventoryUI);
+            _inventoryUI = Instantiate(ui);
+            
             _eventService.StartEvent(eventData,_eventParent);
-            _resourceUI.Init(_inventory, _addressableContainer);
+            _inventoryUI.Init(_inventory, _addressableContainer);
         }
     }
 }

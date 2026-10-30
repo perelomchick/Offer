@@ -1,10 +1,11 @@
 ﻿namespace Core.Infrastructure.AssetManager.Data
 {
-    public enum ViewEnum
+    public enum UiElements
     {
         ResourceView,
         OfferView,
         EventView,
-        EventWindowUI
+        EventWindowUI,
+        InventoryUI
     }
 }

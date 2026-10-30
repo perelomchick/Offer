@@ -1,4 +1,5 @@
 ﻿using Core.Features.Events.Services;
+using Core.Features.TimeClock.Services;
 using Core.Infrastructure.AssetManager.Services;
 using Core.Infrastructure.SaveLoad.Services;
 using Core.Resources;
@@ -16,6 +17,8 @@ namespace Core.App
             Container.Bind<LoadingCurtainUI>().FromInstance(loadingCurtainUI).AsSingle();
             
             Container.BindInterfacesAndSelfTo<AddressableContainer>().AsSingle();
+            Container.BindInterfacesAndSelfTo<ServerTimeService>().AsSingle();
+            
             Container.Bind<Inventory>().AsSingle();
             Container.Bind<SaveService>().AsSingle();
 

@@ -14,8 +14,8 @@ namespace Core.Infrastructure.AssetManager.Services
         private const string PATH_TO_ADDRESS_RESOURECES = "ResourcesImage/";
         private const string PATH_TO_VIEW_PREFABS = "ViewPrefab/";
 
-        private Dictionary<TypeResource,Sprite> _resourceSprites ;
-        private Dictionary<ViewEnum,GameObject> _viewPrefabs;
+        private Dictionary<TypeResource,Sprite> _resourceSprites = new();
+        private Dictionary<UiElements,GameObject> _viewPrefabs = new();
         
         private int _loadedCount;
         private int _totalCount;
@@ -27,15 +27,15 @@ namespace Core.Infrastructure.AssetManager.Services
             throw new Exception($"Sprite by {type} not found");
         }
         
-        public TPrefab GetViewPrefab<TPrefab>(ViewEnum name)
+        public TPrefab GetViewPrefab<TPrefab>(UiElements name)
         {
             //Как таковой можно тип TPrefab на премую не указывать, а сделать Dictionary с typeof.
             //Но муторно превращать enum в тип. Тем немение можно
             if (!_viewPrefabs.TryGetValue(name, out GameObject gameObject))
-                throw new Exception($"The view -  {name}. Is not loaded");
+                throw new Exception($"[ERROR] The view -  {name}. Is not loaded");
             
             if(!gameObject.TryGetComponent<TPrefab>(out TPrefab prefab))
-                throw new Exception($"View -  {name}. Is not contained on GameObject");
+                throw new Exception($"[ERROR] View - {name}. Is not contained on GameObject");
 
             return prefab;
         }
@@ -44,12 +44,12 @@ namespace Core.Infrastructure.AssetManager.Services
         {
             _loadedCount = 0;
             _totalCount = Enum.GetValues(typeof(TypeResource)).Length
-                          + Enum.GetValues(typeof(ViewEnum)).Length;
+                          + Enum.GetValues(typeof(UiElements)).Length;
 
             _resourceSprites = await LoadAddressableByEnum<TypeResource, Sprite>(
                 PATH_TO_ADDRESS_RESOURECES, progress, ct);
 
-            _viewPrefabs = await LoadAddressableByEnum<ViewEnum, GameObject>(
+            _viewPrefabs = await LoadAddressableByEnum<UiElements, GameObject>(
                 PATH_TO_VIEW_PREFABS, progress, ct);
         }
 

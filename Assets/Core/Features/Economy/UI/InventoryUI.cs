@@ -6,7 +6,7 @@ using UnityEngine;
 
 namespace Core.Features.Economy.UI
 {
-    public class ResourceUI : MonoBehaviour
+    public class InventoryUI : MonoBehaviour
     {
         [SerializeField] private ResourceView[] allResources;
 

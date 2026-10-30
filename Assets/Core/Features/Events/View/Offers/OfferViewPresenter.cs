@@ -29,7 +29,7 @@ namespace Core.Features.Events.View.Offers
             _addressableContainer = addressableContainer;
             _purchaseService = purchaseService;
 
-            var resourceViewPrefab = _addressableContainer.GetViewPrefab<ResourceView>(ViewEnum.ResourceView);
+            var resourceViewPrefab = _addressableContainer.GetViewPrefab<ResourceView>(UiElements.ResourceView);
             _resources = new ViewCollection<ResourceView>(resourceViewPrefab, _offerView.GetContainer());
 
             _buySubscription = _offerView

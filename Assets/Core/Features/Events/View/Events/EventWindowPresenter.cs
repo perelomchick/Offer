@@ -29,7 +29,7 @@ namespace Core.Features.Events.View.Events
             _eventWindowUI.Hide();
             _closeSubscription = _eventWindowUI.CloseWindow.Subscribe(_ => _eventWindowUI.Hide());
 
-            var offerViewPrefab = _addressableContainer.GetViewPrefab<OfferView>(ViewEnum.OfferView);
+            var offerViewPrefab = _addressableContainer.GetViewPrefab<OfferView>(UiElements.OfferView);
             _offersCollection = new ViewCollection<OfferView>(offerViewPrefab, _eventWindowUI.GetRootTransform());
         }
 

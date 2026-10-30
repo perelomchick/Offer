@@ -2,8 +2,10 @@
 using System.Collections.Generic;
 using Core.Features.Events.Data;
 using Core.Features.Events.View.Events;
+using Core.Features.TimeClock.Services;
 using Core.Infrastructure.AssetManager.Data;
 using Core.Infrastructure.AssetManager.Services;
+using R3;
 using UnityEngine;
 using Zenject;
 
@@ -15,6 +17,8 @@ namespace Core.Features.Events.Services
 
         private AddressableContainer _addressableContainer;
         private PurchaseService _purchaseService;
+        private ITimeService _timeService;
+        
         private EventView _eventViewPrefab;
         private EventData[] _eventData;
         private Transform _parent;
@@ -22,10 +26,11 @@ namespace Core.Features.Events.Services
         private EventWindowPresenter _eventWindowPresenter;
 
         [Inject]
-        public void Construct(AddressableContainer addressableContainer, PurchaseService purchaseService)
+        public void Construct(AddressableContainer addressableContainer, PurchaseService purchaseService,ITimeService timeService)
         {
             _addressableContainer = addressableContainer;
             _purchaseService = purchaseService;
+            _timeService = timeService;
         }
 
         public void StartEvent(EventData[] eventsData, Transform parent)
@@ -33,11 +38,11 @@ namespace Core.Features.Events.Services
             _eventData = (EventData[])eventsData.Clone();
             _parent = parent;
 
-            var prefab = _addressableContainer.GetViewPrefab<EventWindowUI>(ViewEnum.EventWindowUI);
+            var prefab = _addressableContainer.GetViewPrefab<EventWindowUI>(UiElements.EventWindowUI);
             _eventWindowUI = UnityEngine.Object.Instantiate(prefab);
             _eventWindowPresenter = new EventWindowPresenter(_eventWindowUI, _addressableContainer, _purchaseService);
 
-            _eventViewPrefab = _addressableContainer.GetViewPrefab<EventView>(ViewEnum.EventView);
+            _eventViewPrefab = _addressableContainer.GetViewPrefab<EventView>(UiElements.EventView);
 
             _purchaseService.EventCompleted += OnEventCompleted;
 
@@ -50,8 +55,8 @@ namespace Core.Features.Events.Services
 
             foreach (var eventData in _eventData)
             {
-                bool isActive = eventData.TimeStartEvent.ToDateTimeOffset() <= now
-                                && eventData.TimeEndEvent.ToDateTimeOffset() > now;
+                bool isActive = eventData.TimeStartEvent <= now
+                                && eventData.TimeEndEvent > now;
                 bool isCompleted = _purchaseService.IsEventCompleted(eventData);
                 bool isShown = _events.ContainsKey(eventData.ID);
 
@@ -65,7 +70,10 @@ namespace Core.Features.Events.Services
         private void CreateEventPresenter(EventData eventData)
         {
             var eventView = UnityEngine.Object.Instantiate(_eventViewPrefab, _parent);
-            var eventPresenter = new EventPresenter(eventData, eventView, _eventWindowPresenter);
+            var eventPresenter = new EventPresenter(eventData, eventView, _eventWindowPresenter,_timeService);
+            eventPresenter.EventChanged
+                .Subscribe(_ => RefreshEvents())
+                .AddTo(eventView.gameObject);
             _events.Add(eventData.ID, (eventPresenter, eventView));
         }
 

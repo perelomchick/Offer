@@ -1,4 +1,5 @@
-﻿using Core.Features.TimeClock.Data;
+﻿using System;
+using Core.Features.TimeClock.Data;
 using UnityEngine;
 
 namespace Core.Features.Events.Data
@@ -7,8 +8,8 @@ namespace Core.Features.Events.Data
     public class EventData : ScriptableObject
     {
         public int ID;
-        public TimeDate TimeStartEvent;
-        public TimeDate TimeEndEvent; 
+        public SerializableDateTimeOffset TimeStartEvent;
+        public SerializableDateTimeOffset TimeEndEvent; 
         public OfferData[] Offers;
     }
 }

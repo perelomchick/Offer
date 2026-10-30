@@ -454,7 +454,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f35f9f968d2b46689755a5dcdc8772cc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::OfferCore.Events.OfferView.ResourceView
-  TypeResource: 1
+  TypeResource: 4
   _iconResource: {fileID: 6573301328604140600}
   _amountResource: {fileID: 6350891063711969208}
 --- !u!1 &2367093156203388086
@@ -545,7 +545,7 @@ GameObject:
   - component: {fileID: 1716944795790647825}
   - component: {fileID: 4031709546628418114}
   m_Layer: 5
-  m_Name: InventoryCanvas
+  m_Name: InventoryUI
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -612,7 +612,7 @@ MonoBehaviour:
   m_ScaleFactor: 1
   m_ReferenceResolution: {x: 1920, y: 1080}
   m_ScreenMatchMode: 0
-  m_MatchWidthOrHeight: 0.5
+  m_MatchWidthOrHeight: 1
   m_PhysicalUnit: 3
   m_FallbackScreenDPI: 96
   m_DefaultSpriteDPI: 96
@@ -631,10 +631,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::OfferCore.ResourceUI
   allResources:
-  - {fileID: 0}
   - {fileID: 6371623185895911796}
-  - {fileID: 0}
-  - {fileID: 0}
+  - {fileID: 1701668302273288452}
+  - {fileID: 7485108070720185280}
+  - {fileID: 7526642030916784427}
 --- !u!1 &3183465005809348024
 GameObject:
   m_ObjectHideFlags: 0
@@ -1087,7 +1087,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f35f9f968d2b46689755a5dcdc8772cc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::OfferCore.Events.OfferView.ResourceView
-  TypeResource: 1
+  TypeResource: 3
   _iconResource: {fileID: 35222760989251977}
   _amountResource: {fileID: 6934048969636003633}
 --- !u!1 &7034746101725331385
@@ -1216,7 +1216,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f35f9f968d2b46689755a5dcdc8772cc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::OfferCore.Events.OfferView.ResourceView
-  TypeResource: 1
+  TypeResource: 2
   _iconResource: {fileID: 1353705987445073799}
   _amountResource: {fileID: 6089842892514771182}
 --- !u!1 &8640968784405163426

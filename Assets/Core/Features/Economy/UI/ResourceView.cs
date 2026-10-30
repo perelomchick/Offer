@@ -1,5 +1,4 @@
 ﻿using Core.Data;
-using Core.Infrastructure.AssetManager.Logic;
 using Core.Infrastructure.AssetManager.Services;
 using TMPro;
 using UnityEngine;

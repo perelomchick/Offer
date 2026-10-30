@@ -14,21 +14,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::OfferCore.Events.Data.EventData
   ID: 3
   TimeStartEvent:
-    Year: 2026
-    Month: 10
-    Day: 29
-    Hour: 4
-    Minute: 0
-    Second: 23
-    OffsetMinutes: 5
+    _value: 2026-10-29 17:59:50 +05:00
   TimeEndEvent:
-    Year: 2026
-    Month: 10
-    Day: 29
-    Hour: 20
-    Minute: 0
-    Second: 0
-    OffsetMinutes: 5
+    _value: 2026-10-29 23:59:50 +05:00
   Offers:
   - ID: 1
     Description: Stabdart Descriptioon

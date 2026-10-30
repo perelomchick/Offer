@@ -2,6 +2,7 @@
 using System.Threading;
 using Core.Infrastructure.AssetManager.Services;
 using Cysharp.Threading.Tasks;
+using UnityEngine;
 using UnityEngine.SceneManagement;
 using Zenject;
 
