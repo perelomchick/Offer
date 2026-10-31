@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using Core.Features.Events.Data;
 using Core.Features.Events.Logic;
+using Core.Features.Events.Presenters;
 using Core.Features.Events.Services;
 using Core.Features.Events.View.Offers;
 using Core.Infrastructure.AssetManager.Data;

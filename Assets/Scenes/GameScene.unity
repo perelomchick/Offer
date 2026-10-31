@@ -131,6 +131,7 @@ GameObject:
   - component: {fileID: 23119456}
   - component: {fileID: 23119455}
   - component: {fileID: 23119454}
+  - component: {fileID: 23119458}
   m_Layer: 5
   m_Name: EventCanves
   m_TagString: Untagged
@@ -222,6 +223,19 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0, y: 0}
+--- !u!114 &23119458
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 23119453}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ce1fcb35af434afc9d1cc31c25930528, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Core.Features.Events.View.Events.EventContainer
+  _eventContainer: {fileID: 1313833548}
 --- !u!1 &330585543
 GameObject:
   m_ObjectHideFlags: 0
@@ -535,53 +549,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &1182063838
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1182063839}
-  - component: {fileID: 1182063840}
-  m_Layer: 0
-  m_Name: GameBootsrap
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &1182063839
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1182063838}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 587.93243, y: 434.3189, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1182063840
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1182063838}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 04054363d536461b91a9a070435d80b5, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::OfferCore.Main
-  _eventParent: {fileID: 1313833549}
-  eventData:
-  - {fileID: 11400000, guid: 7398303a5c5b243478b8e41958a11352, type: 2}
 --- !u!1 &1305798879
 GameObject:
   m_ObjectHideFlags: 0
@@ -592,6 +559,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1305798881}
   - component: {fileID: 1305798880}
+  - component: {fileID: 1305798882}
   m_Layer: 0
   m_Name: SceneContext
   m_TagString: Untagged
@@ -612,7 +580,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Zenject::Zenject.SceneContext
   _scriptableObjectInstallers: []
-  _monoInstallers: []
+  _monoInstallers:
+  - {fileID: 1305798882}
   _installerPrefabs: []
   _autoRun: 1
   OnPreInstall:
@@ -645,6 +614,23 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1305798882
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1305798879}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 80dd7c32538749b296ba1f907f55a8fd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Core.App.GameInstaller
+  _eventContainer: {fileID: 23119458}
+  _eventData:
+  - {fileID: 11400000, guid: 7398303a5c5b243478b8e41958a11352, type: 2}
+  - {fileID: 11400000, guid: 8302b449579c8964bbf54451252bfc9b, type: 2}
+  - {fileID: 11400000, guid: 1add12e1522b81f48945a140b0760580, type: 2}
 --- !u!1 &1313833548
 GameObject:
   m_ObjectHideFlags: 0
@@ -792,6 +778,5 @@ SceneRoots:
   - {fileID: 410087041}
   - {fileID: 832575519}
   - {fileID: 1624784001}
-  - {fileID: 1182063839}
   - {fileID: 23119457}
   - {fileID: 1305798881}

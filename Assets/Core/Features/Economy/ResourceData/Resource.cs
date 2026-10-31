@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Core.Data
+namespace Core.Features.Economy.ResourceData
 {
     [Serializable]
     public class Resource

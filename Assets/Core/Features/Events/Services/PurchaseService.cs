@@ -1,44 +1,42 @@
 ﻿using System;
-using System.Linq;
+using Core.Features.Economy.Logic;
 using Core.Features.Events.Data;
+using Core.Features.Events.Save;
 using Core.Infrastructure.SaveLoad.Data;
-using Core.Infrastructure.SaveLoad.Services;
-using Core.Resources;
+using R3;
 
 namespace Core.Features.Events.Services
 {
-    public class PurchaseService
+    public class PurchaseService : IDisposable
     { 
-        private readonly SaveService _saveService;
         private readonly Inventory _inventory;
-        private readonly SaveData _saveData;
+        private readonly Subject<Unit> _offerPurchased = new();
+        private readonly EventSaveData _eventSaveData;
+        
+        public Observable<Unit> OfferPurchased => _offerPurchased;
     
-        public event Action<EventData> EventCompleted;
-    
-        public PurchaseService(SaveService saveService, Inventory inventory)
+        public PurchaseService(Inventory inventory,EventSaveData eventSaveData)
         {
-            _saveService = saveService;
             _inventory = inventory;
-            _saveData = saveService.Load();
-    
-            if (_saveData.Resources.Count > 0)
-                _inventory.LoadFromSave(_saveData.Resources);
+            _eventSaveData = eventSaveData;
+        }
+        
+        public bool IsPurchased(EventData eventData, OfferData offer)
+        {
+            return _eventSaveData.ContainsPurchasedOffer(eventData.ID, offer.ID);
         }
     
-        public bool IsPurchased(EventData eventData, OfferData offer) =>
-            _saveData.PurchasedOffers.Contains(MakeKey(eventData, offer));
-    
-        public bool IsEventCompleted(EventData eventData) =>
-            eventData.Offers.Length > 0 &&
-            eventData.Offers.All(offer => IsPurchased(eventData, offer));
-    
-        public bool CanBuy(EventData eventData, OfferData offer) =>
-            !IsPurchased(eventData, offer)
-            && _inventory.GetAmount(offer.Price.Type) >= offer.Price.Amount;
-    
-        private static string MakeKey(EventData eventData, OfferData offer) =>
-            $"{eventData.ID}:{offer.ID}";
+        public bool CanBuy(EventData eventData, OfferData offer)
+        {
+            var enoughResource = _inventory.GetAmount(offer.Price.Type) >= offer.Price.Amount;
+            return !IsPurchased(eventData, offer) && enoughResource;
+        }
         
+        public ISaveData GetSaveData()
+        {
+            return _eventSaveData;
+        }
+
         public bool TryBuy(EventData eventData, OfferData offer)
         {
             if (!CanBuy(eventData, offer))
@@ -49,19 +47,15 @@ namespace Core.Features.Events.Services
             foreach (var reward in offer.Rewards)
                 _inventory.AddResource(reward.Type, reward.Amount);
     
-            _saveData.PurchasedOffers.Add(MakeKey(eventData, offer));
-            SaveProgress();
-    
-            if (IsEventCompleted(eventData))
-                EventCompleted?.Invoke(eventData);
-    
+            _eventSaveData.AddData(eventData.ID, offer.ID);
+            _offerPurchased.OnNext(Unit.Default);
+            
             return true;
         }
-    
-        private void SaveProgress()
+
+        public void Dispose()
         {
-            _saveData.Resources = _inventory.ToSaveData();
-            _saveService.Save(_saveData);
+            _offerPurchased?.Dispose();
         }
     }
 }

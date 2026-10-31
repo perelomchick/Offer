@@ -1,13 +1,24 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using Core.Data;
+using Core.Features.Economy.ResourceData;
+using Core.Features.Economy.Save;
 using R3;
 using UnityEngine;
 
-namespace Core.Resources
+namespace Core.Features.Economy.Logic
 {
     public class Inventory
     {//Условный класс Inventory, просто чтобы бы какой-то
+        private readonly Subject<Unit> _changed = new();
+        
+        public Observable<Unit> Changed => _changed;
+
+        public Inventory(InventorySaveData saveData)
+        {
+            foreach (var res in saveData.Resources)
+                SetAmount(res.Type, res.Amount);
+        }
+        
         private readonly Dictionary<TypeResource, ReactiveProperty<int>> _resources = new()
         {
             { TypeResource.Gold,    new ReactiveProperty<int>(10) },
@@ -26,6 +37,7 @@ namespace Core.Resources
         {
             if (_resources.TryGetValue(res, out var prop)) prop.Value += count;
             else Debug.Log("Add resource Error: " + res);
+            _changed.OnNext(Unit.Default);
         }
 
         public void RemoveResource(TypeResource res, int count)
@@ -34,15 +46,16 @@ namespace Core.Resources
                 prop.Value -= count;
             else
                 Debug.Log("Remove resource Error: " + res);
+            _changed.OnNext(Unit.Default);
         }
 
-        public List<Resource> ToSaveData() =>
-            _resources.Select(p => new Resource { Type = p.Key, Amount = p.Value.Value }).ToList();
-
-        public void LoadFromSave(List<Resource> resources)
+        public InventorySaveData ToSaveData()
         {
-            foreach (var res in resources)
-                SetAmount(res.Type, res.Amount);
+            var resourcesList = _resources.Select(p =>
+                new Resource { Type = p.Key, Amount = p.Value.Value }).ToList();
+            var inventory = new InventorySaveData();
+            inventory.SetResource(resourcesList);
+            return inventory;
         }
         
         private void SetAmount(TypeResource res, int count)

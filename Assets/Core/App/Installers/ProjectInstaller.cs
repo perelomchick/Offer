@@ -1,8 +1,7 @@
-﻿using Core.Features.Events.Services;
+﻿using Core.App.EntryPoints;
 using Core.Features.TimeClock.Services;
 using Core.Infrastructure.AssetManager.Services;
 using Core.Infrastructure.SaveLoad.Services;
-using Core.Resources;
 using UnityEngine;
 using Zenject;
 
@@ -19,11 +18,8 @@ namespace Core.App
             Container.BindInterfacesAndSelfTo<AddressableContainer>().AsSingle();
             Container.BindInterfacesAndSelfTo<ServerTimeService>().AsSingle();
             
-            Container.Bind<Inventory>().AsSingle();
             Container.Bind<SaveService>().AsSingle();
-
-            Container.BindInterfacesAndSelfTo<PurchaseService>().AsSingle();
-            Container.BindInterfacesAndSelfTo<EventService>().AsSingle();
+            
             Container.BindInterfacesAndSelfTo<EntryPoint>().AsSingle();
         }
     }

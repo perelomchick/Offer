@@ -1,6 +1,6 @@
-﻿using Core.Data;
+﻿using Core.Features.Economy.Logic;
+using Core.Features.Economy.ResourceData;
 using Core.Infrastructure.AssetManager.Services;
-using Core.Resources;
 using R3;
 using UnityEngine;
 

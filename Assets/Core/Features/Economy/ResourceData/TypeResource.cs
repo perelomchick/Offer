@@ -1,4 +1,4 @@
-﻿namespace Core.Data
+﻿namespace Core.Features.Economy.ResourceData
 {
     public enum TypeResource
     {

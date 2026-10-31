@@ -20,7 +20,7 @@ namespace Core.Features.TimeClock.Data
             => DateTimeOffset.TryParse(
                 _value,
                 CultureInfo.InvariantCulture,
-                DateTimeStyles.AssumeUniversal,   // если смещение не указано, считается UTC
+                DateTimeStyles.AssumeUniversal, 
                 out result);
 
         public DateTimeOffset Value

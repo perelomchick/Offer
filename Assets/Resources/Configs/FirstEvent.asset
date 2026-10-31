@@ -14,9 +14,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::OfferCore.Events.EventConfig
   ID: 1
   TimeStartEvent:
-    _value: 2026-10-29 17:59:33 +05:00
+    _value: 2026-10-31 11:04:27 +05:00
   TimeEndEvent:
-    _value: 2026-10-29 22:59:33 +05:00
+    _value: 2026-10-31 18:04:28 +05:00
   Offers:
   - ID: 1
     Description: StandardtDescription

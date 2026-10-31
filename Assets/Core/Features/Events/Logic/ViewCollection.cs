@@ -13,10 +13,7 @@ namespace Core.Features.Events.Logic
         {
             _pool = new ViewPool<T>(prefab, parent);
         }
-
         
-        //Так и не понял почему это работает
-        //Подробнее узнать про ObjectPool и LIFO
         public List<T> Fill<TData>(IEnumerable<TData> data, Action<T, TData> bind)
         {
             ReleaseAll();
@@ -36,8 +33,6 @@ namespace Core.Features.Events.Logic
 
         public void ReleaseAll()
         {
-            // Обратный порядок: последний возвращённый в стек достаётся первым,
-            // поэтому так первый элемент снова окажется первым
             for (int i = _active.Count - 1; i >= 0; i--)
                 _pool.Release(_active[i]);
 

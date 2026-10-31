@@ -1,14 +1,15 @@
-﻿using System;
+﻿using R3;
+using System;
+using UnityEngine;
 using Core.Features.Economy.UI;
 using Core.Features.Events.Data;
 using Core.Features.Events.Logic;
 using Core.Features.Events.Services;
+using Core.Features.Events.View.Offers;
 using Core.Infrastructure.AssetManager.Data;
 using Core.Infrastructure.AssetManager.Services;
-using R3;
-using UnityEngine;
 
-namespace Core.Features.Events.View.Offers
+namespace Core.Features.Events.Presenters
 {
     public class OfferViewPresenter : IDisposable
     {
@@ -17,10 +18,10 @@ namespace Core.Features.Events.View.Offers
         private readonly PurchaseService _purchaseService;
         private readonly ViewCollection<ResourceView> _resources;
         private readonly IDisposable _buySubscription;
-
+        
         private EventData _eventData;
         private OfferData _offerData;
-
+        
         public OfferViewPresenter(OfferView offerView,
             AddressableContainer addressableContainer,
             PurchaseService purchaseService)
@@ -38,6 +39,8 @@ namespace Core.Features.Events.View.Offers
         }
 
         public void Dispose() => DisposeAll();
+        
+
 
         public void SetData(EventData eventData, OfferData offerData)
         {
@@ -64,7 +67,7 @@ namespace Core.Features.Events.View.Offers
 
         private void Refresh()
         {
-            bool isPurchased = _purchaseService.IsPurchased(_eventData, _offerData);
+            var isPurchased = _purchaseService.IsPurchased(_eventData, _offerData);
             _offerView.SetPurchasedIcon(isPurchased);
             _offerView.SetBuyInteractable(!isPurchased && _purchaseService.CanBuy(_eventData, _offerData));
         }

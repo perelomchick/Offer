@@ -1,4 +1,4 @@
-﻿using Core.Data;
+﻿using Core.Features.Economy.ResourceData;
 using Core.Infrastructure.AssetManager.Services;
 using TMPro;
 using UnityEngine;
@@ -27,7 +27,7 @@ namespace Core.Features.Economy.UI
                 TypeResource = resource.Type;
             }
             
-            SetSprite(addressableContainer.GetSpriteResource(TypeResource));
+            SetSprite(addressableContainer.Get<TypeResource,Sprite>(TypeResource));
         }
     }
 }

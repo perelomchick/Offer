@@ -1,119 +1,77 @@
 ﻿using System;
 using System.Collections.Generic;
-using Core.Features.Events.Data;
-using Core.Features.Events.View.Events;
-using Core.Features.TimeClock.Services;
-using Core.Infrastructure.AssetManager.Data;
-using Core.Infrastructure.AssetManager.Services;
+using System.Linq;
 using R3;
-using UnityEngine;
-using Zenject;
+using Core.Features.Events.Data;
+using Core.Features.Events.Factories;
+using Core.Features.TimeClock.Services;
 
 namespace Core.Features.Events.Services
 {
     public class EventService : IDisposable
     {
-        private readonly Dictionary<int, (EventPresenter presenter, EventView view)> _events = new();
+        private readonly Dictionary<int, EventEntry> _events = new();
+        private readonly EventEntryFactory _eventEntryFactory;
+        private readonly PurchaseService _purchaseService;
+        private readonly ITimeService _timeService;
 
-        private AddressableContainer _addressableContainer;
-        private PurchaseService _purchaseService;
-        private ITimeService _timeService;
-        
-        private EventView _eventViewPrefab;
+        private IDisposable _disposableFactoryTimer;
         private EventData[] _eventData;
-        private Transform _parent;
-        private EventWindowUI _eventWindowUI;
-        private EventWindowPresenter _eventWindowPresenter;
 
-        [Inject]
-        public void Construct(AddressableContainer addressableContainer, PurchaseService purchaseService,ITimeService timeService)
+        public EventService(EventEntryFactory eventEntryFactory, PurchaseService purchaseService,ITimeService timeService)
         {
-            _addressableContainer = addressableContainer;
-            _purchaseService = purchaseService;
             _timeService = timeService;
+            _eventEntryFactory = eventEntryFactory;
+            _purchaseService = purchaseService;
+            _disposableFactoryTimer = _eventEntryFactory.TimeChanged.Subscribe(_ => RefreshEvents());
         }
 
-        public void StartEvent(EventData[] eventsData, Transform parent)
+        public void StartEvent(EventData[] eventsData)
         {
             _eventData = (EventData[])eventsData.Clone();
-            _parent = parent;
-
-            var prefab = _addressableContainer.GetViewPrefab<EventWindowUI>(UiElements.EventWindowUI);
-            _eventWindowUI = UnityEngine.Object.Instantiate(prefab);
-            _eventWindowPresenter = new EventWindowPresenter(_eventWindowUI, _addressableContainer, _purchaseService);
-
-            _eventViewPrefab = _addressableContainer.GetViewPrefab<EventView>(UiElements.EventView);
-
-            _purchaseService.EventCompleted += OnEventCompleted;
+            _purchaseService.OfferPurchased.Subscribe(_ => RefreshEvents());
 
             RefreshEvents();
         }
 
-        public void RefreshEvents()
+        private void RefreshEvents()
         {
-            var now = DateTimeOffset.Now;
+            var now = _timeService.GetNow();
 
             foreach (var eventData in _eventData)
             {
                 bool isActive = eventData.TimeStartEvent <= now
                                 && eventData.TimeEndEvent > now;
-                bool isCompleted = _purchaseService.IsEventCompleted(eventData);
-                bool isShown = _events.ContainsKey(eventData.ID);
 
-                if (isActive && !isCompleted && !isShown)
-                    CreateEventPresenter(eventData);
-                else if ((!isActive || isCompleted) && isShown)
-                    RemoveEventPresenter(eventData.ID);
+                var isCompleted = AllOffersPurchased(eventData);
+                bool isContains = _events.ContainsKey(eventData.ID);
+
+                if (isActive && !isCompleted && !isContains)
+                {
+                    _events.Add(eventData.ID, _eventEntryFactory.CreateEventView(eventData));
+                }
+                else if ((!isActive || isCompleted) && isContains)
+                {
+                    _events[eventData.ID].Dispose();
+                    _events.Remove(eventData.ID);
+                }
             }
         }
 
-        private void CreateEventPresenter(EventData eventData)
+        private bool AllOffersPurchased(EventData eventData)
         {
-            var eventView = UnityEngine.Object.Instantiate(_eventViewPrefab, _parent);
-            var eventPresenter = new EventPresenter(eventData, eventView, _eventWindowPresenter,_timeService);
-            eventPresenter.EventChanged
-                .Subscribe(_ => RefreshEvents())
-                .AddTo(eventView.gameObject);
-            _events.Add(eventData.ID, (eventPresenter, eventView));
-        }
-
-        private void RemoveEventPresenter(int eventId)
-        {
-            var (presenter, view) = _events[eventId];
-            presenter.Dispose();
-
-            if (view != null)
-                UnityEngine.Object.Destroy(view.gameObject);
-
-            _events.Remove(eventId);
-        }
-
-        private void OnEventCompleted(EventData eventData)
-        {
-            // Купить оффер можно только из открытого окна, поэтому закрываем его
-            _eventWindowUI.Hide();
-
-            if (_events.ContainsKey(eventData.ID))
-                RemoveEventPresenter(eventData.ID);
+            return eventData.Offers.All(offer => _purchaseService.IsPurchased(eventData, offer));
         }
 
         public void Dispose()
         {
-            if (_purchaseService != null)
-                _purchaseService.EventCompleted -= OnEventCompleted;
-
-            foreach (var entry in _events.Values)
+            foreach (var eventEntry in _events.Values)
             {
-                entry.presenter.Dispose();
-                if (entry.view != null)
-                    UnityEngine.Object.Destroy(entry.view.gameObject);
+                eventEntry.Dispose();
             }
-
+            
+            _disposableFactoryTimer.Dispose();
             _events.Clear();
-
-            _eventWindowPresenter?.Dispose();
-            if (_eventWindowUI != null)
-                UnityEngine.Object.Destroy(_eventWindowUI.gameObject);
         }
     }
 }

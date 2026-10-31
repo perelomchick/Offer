@@ -1,5 +1,5 @@
 ﻿using System;
-using Core.Data;
+using Core.Features.Economy.ResourceData;
 
 namespace Core.Features.Events.Data
 {
