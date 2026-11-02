@@ -1,6 +1,6 @@
-﻿using System;
+﻿using R3;
+using System;
 using Core.Features.TimeClock.Services;
-using R3;
 
 namespace Core.Features.TimeClock.Logic
 {

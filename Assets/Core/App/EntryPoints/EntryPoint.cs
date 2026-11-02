@@ -2,7 +2,7 @@
 using Zenject;
 using UnityEngine;
 using System.Threading;
-using Core.App.Data;
+using Core.Common.Data;
 using Core.Features.Economy.ResourceData;
 using Core.Features.Economy.Save;
 using Core.Features.Events.Save;
@@ -48,8 +48,19 @@ namespace Core.App.EntryPoints
                 await RegisterAddressableContainer(ct);
                 var eventSaveData = await LoadingData<EventSaveData>(ConstName.NAME_EVENT_SAVE_FILE,ct);
                 var inventorySaveData = await LoadingData<InventorySaveData>(ConstName.NAME_INVENTORY_SAVE_FILE,ct);
-                
-                await _sceneLoader.LoadSceneAsync(
+                await LoadAndBindToNextScene(ct, eventSaveData, inventorySaveData);
+            }
+            catch (Exception e)
+            {
+                Debug.LogError(e);
+                throw;
+            }
+        }
+
+        private async UniTask LoadAndBindToNextScene(CancellationToken ct, EventSaveData eventSaveData,
+            InventorySaveData inventorySaveData)
+        {
+            await _sceneLoader.LoadSceneAsync(
                     ConstName.GAME_SCENE_NAME,
                     LoadSceneMode.Single,
                     container =>
@@ -57,14 +68,7 @@ namespace Core.App.EntryPoints
                         container.BindInstance(eventSaveData);
                         container.BindInstance(inventorySaveData);
                     })
-                    .ToUniTask(cancellationToken:ct);
-                
-            }
-            catch (Exception e)
-            {
-                Console.WriteLine(e);
-                throw;
-            }
+                .ToUniTask(cancellationToken:ct);
         }
 
         private async UniTask<T> LoadingData<T>(string fileName, CancellationToken ct)
@@ -75,19 +79,6 @@ namespace Core.App.EntryPoints
             if (result == null)
             {
                 result = new T();
-            }
-
-            return result;
-        }
-
-
-        private async UniTask<EventSaveData> LoadEventData(CancellationToken ct)
-        {
-            var result = await _saveService.Load<EventSaveData>(ConstName.NAME_FOLDER_SAVE, ConstName.NAME_EVENT_SAVE_FILE,ct);
-
-            if (result == null)
-            {
-                result = new EventSaveData();
             }
 
             return result;

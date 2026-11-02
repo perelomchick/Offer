@@ -1,9 +1,10 @@
 ﻿using System;
+using Zenject;
 using System.IO;
-using System.Threading;
-using Core.Infrastructure.SaveLoad.Data;
-using Cysharp.Threading.Tasks;
 using UnityEngine;
+using System.Threading;
+using Cysharp.Threading.Tasks;
+using Core.Infrastructure.SaveLoad.Data;
 
 namespace Core.Infrastructure.SaveLoad.Services
 {
@@ -11,9 +12,12 @@ namespace Core.Infrastructure.SaveLoad.Services
     {
         private readonly string _pathToMainFolder;
 
-        public SaveService()
+        [Inject]
+        public SaveService() : this(Application.persistentDataPath) { }
+
+        public SaveService(string pathToMainFolder)
         {
-            _pathToMainFolder = Application.persistentDataPath;
+            _pathToMainFolder = pathToMainFolder;
         }
 
         public async UniTask<T> Load<T>(string folderName,
@@ -36,7 +40,8 @@ namespace Core.Infrastructure.SaveLoad.Services
             }
             catch (Exception e)
             {
-                throw new Exception(e.Message);
+                Debug.LogException(e);
+                throw;
             }
         }
 
@@ -60,7 +65,7 @@ namespace Core.Infrastructure.SaveLoad.Services
             }
             catch (Exception e)
             {
-                Console.WriteLine(e);
+                Debug.LogException(e);
                 throw;
             }
         }

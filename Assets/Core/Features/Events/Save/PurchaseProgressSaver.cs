@@ -1,5 +1,5 @@
 ﻿using System;
-using Core.App.Data;
+using Core.Common.Data;
 using Core.Features.Events.Services;
 using Core.Infrastructure.SaveLoad.Services;
 using R3;
@@ -17,7 +17,6 @@ namespace Core.Features.Events.Save
             _purchaseService = purchaseService;
             _saveService = saveService;
             _disposable = _purchaseService.OfferPurchased.Subscribe(_ => SaveData());
-
         }
         
         public void Dispose()

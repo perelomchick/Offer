@@ -1,9 +1,9 @@
-﻿using System;
-using System.Threading;
-using Cysharp.Threading.Tasks;
-using R3;
+﻿using R3;
+using System;
 using UnityEngine;
 using UnityEngine.UI;
+using System.Threading;
+using Cysharp.Threading.Tasks;
 
 namespace Core.App
 {

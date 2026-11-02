@@ -1,7 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using R3;
+using System;
 using System.Linq;
-using R3;
+using System.Collections.Generic;
 using Core.Features.Events.Data;
 using Core.Features.Events.Factories;
 using Core.Features.TimeClock.Services;

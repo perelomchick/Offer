@@ -1,14 +1,14 @@
-﻿using System.Collections.Generic;
+﻿using R3;
 using System.Linq;
-using Core.Features.Economy.ResourceData;
-using Core.Features.Economy.Save;
-using R3;
 using UnityEngine;
+using System.Collections.Generic;
+using Core.Features.Economy.Save;
+using Core.Features.Economy.ResourceData;
 
 namespace Core.Features.Economy.Logic
 {
     public class Inventory
-    {//Условный класс Inventory, просто чтобы бы какой-то
+    {
         private readonly Subject<Unit> _changed = new();
         
         public Observable<Unit> Changed => _changed;

@@ -37,19 +37,15 @@ namespace Core.App
         
         public void Initialize()
         {
-            Debug.Log("startGame");
             StartGame();
-            _loadingCurtainUI.Hide().Forget();
         }
 
         private void StartGame()
-        {
-            var ui = AddressableContainerExtensions.GetViewPrefab<InventoryUI>(_addressableContainer,UiElements.InventoryUI);
-            _inventoryUI = Object.Instantiate(ui);
+        {  
+            _loadingCurtainUI.Hide().Forget();
+           
             _eventService.StartEvent(_eventData);
-            _inventoryUI.Init(_inventory, _addressableContainer);
+           
         }
-
-
     }
 }

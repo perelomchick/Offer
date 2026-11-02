@@ -1,9 +1,9 @@
-﻿using System;
+﻿using R3;
+using System;
 using Core.Features.Economy.Logic;
 using Core.Features.Events.Data;
 using Core.Features.Events.Save;
 using Core.Infrastructure.SaveLoad.Data;
-using R3;
 
 namespace Core.Features.Events.Services
 {

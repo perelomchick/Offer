@@ -33,8 +33,7 @@ namespace Core.Editor
             var prevColor = GUI.color;
             if (!isValid)
                 GUI.color = ErrorColor;
-
-            // DelayedTextField применяет значение по Enter или потере фокуса, а не на каждую букву
+            
             EditorGUI.BeginChangeCheck();
             var text = EditorGUI.DelayedTextField(textRect, valueProp.stringValue);
             if (EditorGUI.EndChangeCheck())

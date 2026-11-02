@@ -1,7 +1,7 @@
-﻿using System.Collections.Generic;
-using Core.Features.Economy.ResourceData;
+﻿using UnityEngine;
+using System.Collections.Generic;
 using Core.Infrastructure.SaveLoad.Data;
-using UnityEngine;
+using Core.Features.Economy.ResourceData;
 
 namespace Core.Features.Economy.Save
 {

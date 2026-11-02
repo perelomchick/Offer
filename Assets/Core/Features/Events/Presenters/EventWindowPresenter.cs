@@ -2,20 +2,21 @@
 using System.Collections.Generic;
 using Core.Features.Events.Data;
 using Core.Features.Events.Logic;
-using Core.Features.Events.Presenters;
 using Core.Features.Events.Services;
-using Core.Features.Events.View.Offers;
+using Core.Features.Events.UI.Events;
+using Core.Features.Events.UI.Offers;
 using Core.Infrastructure.AssetManager.Data;
+using Core.Infrastructure.AssetManager.Logic;
 using Core.Infrastructure.AssetManager.Services;
 using R3;
 
-namespace Core.Features.Events.View.Events
+namespace Core.Features.Events.Presenters
 {
     public class EventWindowPresenter : IDisposable
     {
         private readonly EventWindowUI _eventWindowUI;
-        private readonly ViewCollection<OfferView> _offersCollection;
-        private readonly Dictionary<OfferView, OfferViewPresenter> _offerViewPresenters = new();
+        private readonly ViewCollection<OfferUI> _offersCollection;
+        private readonly Dictionary<OfferUI, OfferViewPresenter> _offerViewPresenters = new();
         private readonly AddressableContainer _addressableContainer;
         private readonly PurchaseService _purchaseService;
         private readonly IDisposable _closeSubscription;
@@ -30,8 +31,8 @@ namespace Core.Features.Events.View.Events
             _eventWindowUI.Hide();
             _closeSubscription = _eventWindowUI.CloseWindow.Subscribe(_ => _eventWindowUI.Hide());
 
-            var offerViewPrefab = _addressableContainer.GetViewPrefab<OfferView>(UiElements.OfferView);
-            _offersCollection = new ViewCollection<OfferView>(offerViewPrefab, _eventWindowUI.GetRootTransform());
+            var offerViewPrefab = _addressableContainer.GetViewPrefab<OfferUI>(UiElements.OfferView);
+            _offersCollection = new ViewCollection<OfferUI>(offerViewPrefab, _eventWindowUI.GetRootTransform());
         }
 
         public void Dispose() => DisposeAll();
@@ -43,12 +44,12 @@ namespace Core.Features.Events.View.Events
                 (view, data) => GetOfferViewPresenter(view).SetData(eventData, data));
         }
 
-        private OfferViewPresenter GetOfferViewPresenter(OfferView offerView)
+        private OfferViewPresenter GetOfferViewPresenter(OfferUI offerUI)
         {
-            if (!_offerViewPresenters.TryGetValue(offerView, out var presenter))
+            if (!_offerViewPresenters.TryGetValue(offerUI, out var presenter))
             {
-                presenter = new OfferViewPresenter(offerView, _addressableContainer, _purchaseService);
-                _offerViewPresenters.Add(offerView, presenter);
+                presenter = new OfferViewPresenter(offerUI, _addressableContainer, _purchaseService);
+                _offerViewPresenters.Add(offerUI, presenter);
             }
             return presenter;
         }

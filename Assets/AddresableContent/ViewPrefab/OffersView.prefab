@@ -644,7 +644,7 @@ MonoBehaviour:
   _rewardGridLayout: {fileID: 8760901447042768402}
   _descriptionText: {fileID: 9114613219693084978}
   _buyButton: {fileID: 3920396835123992574}
-  _priceResourceView: {fileID: 5290950431331255549}
+  _resourceUI: {fileID: 5290950431331255549}
 --- !u!1 &4333330502887979180
 GameObject:
   m_ObjectHideFlags: 0
@@ -993,7 +993,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f35f9f968d2b46689755a5dcdc8772cc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::OfferCore.Events.View.ResourceView
-  TypeResource: 0
   _iconResource: {fileID: 9161573319374592797}
   _amountResource: {fileID: 1922095820109091201}
 --- !u!1 &4947867497976469047

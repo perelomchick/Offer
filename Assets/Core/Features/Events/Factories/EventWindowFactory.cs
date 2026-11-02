@@ -1,9 +1,11 @@
-﻿using Core.Features.Events.Logic;
+﻿using Zenject;
+using Core.Features.Events.Logic;
+using Core.Features.Events.Presenters;
 using Core.Features.Events.Services;
-using Core.Features.Events.View.Events;
+using Core.Features.Events.UI.Events;
 using Core.Infrastructure.AssetManager.Data;
-using Core.Infrastructure.AssetManager.Services;
-using Zenject;
+using Core.Infrastructure.AssetManager.Logic;
+using Core.Infrastructure.AssetManager.Services; 
 
 namespace Core.Features.Events.Factories
 {

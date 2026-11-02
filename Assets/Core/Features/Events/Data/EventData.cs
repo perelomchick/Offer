@@ -1,5 +1,4 @@
-﻿using System;
-using Core.Features.TimeClock.Data;
+﻿using Core.Features.TimeClock.Data;
 using UnityEngine;
 
 namespace Core.Features.Events.Data

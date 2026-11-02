@@ -1,36 +1,36 @@
-﻿using System;
+﻿using R3;
+using System;
 using Core.Features.Events.Data;
-using Core.Features.Events.View.Events;
+using Core.Features.Events.UI.Events;
 using Core.Features.TimeClock.Logic;
-using R3;
 
 namespace Core.Features.Events.Presenters
 {
     public class EventPresenter : IDisposable
     {
         private readonly Subject<Unit> _eventChanged = new();
-        private readonly EventView _eventView;
+        private readonly EventUI _eventUI;
         private readonly IDisposable _disposableTimer;
         
         public Observable<Unit> EventChanged => _eventChanged;
 
-        public EventPresenter(EventData  eventData,EventView eventView,EventWindowPresenter eventWindowPresenter, CountdownTimer countdownTimer)
+        public EventPresenter(EventData  eventData,EventUI eventUI,EventWindowPresenter eventWindowPresenter, CountdownTimer countdownTimer)
         {
-            _eventView = eventView;
+            _eventUI = eventUI;
             
-            _eventView.OpenWindow
+            _eventUI.OpenWindow
                 .Subscribe(_ => eventWindowPresenter.SetEventData(eventData))
-                .AddTo(_eventView.gameObject);
+                .AddTo(_eventUI.gameObject);
             
             _disposableTimer = countdownTimer.RemainingTime
-                .Subscribe(time => _eventView.SetTimerText(time.ToString()))
-                .AddTo(_eventView.gameObject);
+                .Subscribe(time => _eventUI.SetTimerText(time.ToString()))
+                .AddTo(_eventUI.gameObject);
         }
 
         public void Dispose()
         {
-            if(_eventView != null)
-                UnityEngine.Object.Destroy(_eventView.gameObject);
+            if(_eventUI != null)
+                UnityEngine.Object.Destroy(_eventUI.gameObject);
             
             _disposableTimer?.Dispose();
         }

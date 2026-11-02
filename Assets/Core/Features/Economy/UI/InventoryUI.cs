@@ -1,28 +1,34 @@
-﻿using Core.Features.Economy.Logic;
+﻿using UnityEngine;
+using System.Linq;
+using System.Collections.Generic;
 using Core.Features.Economy.ResourceData;
-using Core.Infrastructure.AssetManager.Services;
-using R3;
-using UnityEngine;
 
 namespace Core.Features.Economy.UI
 {
     public class InventoryUI : MonoBehaviour
     {
-        [SerializeField] private ResourceView[] allResources;
+        [SerializeField] private InventoryUIElement[] _invenroInventoryUIElements;
 
-        public void Init(Inventory inventory,AddressableContainer  addressableContainer)
+        private Dictionary<TypeResource, ResourceUI> _resourceByType;
+
+        private Dictionary<TypeResource, ResourceUI> ResourceByType =>
+            _resourceByType ??= _invenroInventoryUIElements
+                .ToDictionary(x => x.Type, x => x.ResourceUI);
+        
+        
+        public void SetSprite(TypeResource typeResource, Sprite sprite)
         {
-            foreach (var resource in allResources)
-            {
-                resource.Init(addressableContainer);
-                SubscribeToResources(inventory, resource.TypeResource, resource);
-            }
+            ResourceByType[typeResource].SetSprite(sprite);
         }
 
-        private void SubscribeToResources(Inventory inventory,TypeResource typeResource,ResourceView resourceView)
+        public void SetAmount(TypeResource typeResource, int amount)
         {
-            inventory.GetObservableResource(typeResource)
-                .Subscribe(resourceView.SetAmount);
+            ResourceByType[typeResource].SetAmount(amount);
+        }
+        
+        public TypeResource[] GetElementTypes()
+        {
+            return _invenroInventoryUIElements.Select(x => x.Type).ToArray();
         }
     }
 }

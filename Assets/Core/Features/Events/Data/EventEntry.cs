@@ -1,25 +1,25 @@
 ﻿using System;
 using Core.Features.Events.Presenters;
-using Core.Features.Events.View.Events;
+using Core.Features.Events.UI.Events;
 
 namespace Core.Features.Events.Data
 {
     public class EventEntry : IDisposable
     {
         private readonly EventPresenter _eventPresenter;
-        private readonly EventView _eventView;
+        private readonly EventUI _eventUI;
 
-        public EventEntry(EventPresenter eventPresenter, EventView eventView)
+        public EventEntry(EventPresenter eventPresenter, EventUI eventUI)
         {
             _eventPresenter = eventPresenter;
-            _eventView = eventView;
+            _eventUI = eventUI;
         }
         
         public void Dispose()
         {
             _eventPresenter.Dispose();
-            if(_eventView != null)
-                UnityEngine.Object.Destroy(_eventView.gameObject);
+            if(_eventUI != null)
+                UnityEngine.Object.Destroy(_eventUI.gameObject);
         }
     }
 }
