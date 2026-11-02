@@ -53,7 +53,7 @@ namespace Core.Infrastructure.SaveLoad.Services
             var pathToFolder = Path.Combine(_pathToMainFolder, folderName);
             var pathToFile = Path.Combine(pathToFolder, fileName);
 
-            if (!Directory.Exists(pathToFile))
+            if (!Directory.Exists(pathToFolder))
             {
                 Directory.CreateDirectory(pathToFolder);
             }
