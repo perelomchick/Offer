@@ -37,7 +37,7 @@ namespace Core.Infrastructure.SaveLoad.Services
                 var json = await File.ReadAllTextAsync(pathToFile,ct);
                 await UniTask.SwitchToMainThread();
 
-                if (string.IsNullOrEmpty(json))
+                if (string.IsNullOrWhiteSpace(json))
                 {
                     return new T();
                 }
