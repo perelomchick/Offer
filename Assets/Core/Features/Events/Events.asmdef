@@ -1,0 +1,24 @@
+{
+    "name": "Events",
+    "rootNamespace": "",
+    "references": [
+        "GUID:77221876cc6b8244180b96e320b1bcd4",
+        "GUID:f51ebe6a0ceec4240a699833d6309b23",
+        "GUID:0d8beb7f090555447a6cf5ce9e54dbb4",
+        "GUID:6055be8ebefd69e48b49212b09b47b2f",
+        "GUID:28c055bf40e244429aea06d59e2a8460",
+        "GUID:0b992bd5854b4a588d07ae805689d3cf",
+        "GUID:04d853dcfa83431caa19c42c718f8876",
+        "GUID:d0e34ecec2364fb78a084a3bc2824751",
+        "GUID:1f683c5ba2a24fdda062fc910f0abcee"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}
