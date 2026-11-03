@@ -1,9 +1,7 @@
-﻿
-using Zenject;
+﻿using Zenject;
 using Cysharp.Threading.Tasks;
 using Core.Features.Economy.UI;
 using Core.Features.Events.Data;
-using Core.Infrastructure.AssetManager.Services;
 using EventService = Core.Features.Events.Services.EventService;
 
 namespace Core.App
@@ -16,7 +14,7 @@ namespace Core.App
         private LoadingCurtainUI _loadingCurtainUI;
         private EventService _eventService;
 
-        public GameBootstrap (AddressableContainer addressableContainer,
+        public GameBootstrap (
             EventService eventService,
             LoadingCurtainUI loadingCurtainUI,
             EventData[] eventData)
@@ -35,7 +33,6 @@ namespace Core.App
         {  
             _loadingCurtainUI.Hide().Forget();
             _eventService.StartEvent(_eventData);
-           
         }
     }
 }

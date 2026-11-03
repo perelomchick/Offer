@@ -19,8 +19,7 @@ namespace Core.Features.Economy.UI
                     .ToDictionary(x => x.Type, x => x.ResourceUI);
             }
         }
-
-
+        
         public void SetSprite(TypeResource typeResource, Sprite sprite)
         {
             ResourceByType[typeResource].SetSprite(sprite);
