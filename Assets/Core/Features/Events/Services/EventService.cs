@@ -18,6 +18,8 @@ namespace Core.Features.Events.Services
         private IDisposable _disposableFactoryTimer;
         private EventData[] _eventData;
 
+        
+        
         public EventService(EventEntryFactory eventEntryFactory, PurchaseService purchaseService,ITimeService timeService)
         {
             _timeService = timeService;

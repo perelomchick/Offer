@@ -35,13 +35,13 @@ namespace Core.Infrastructure.SaveLoad.Services
             try
             {
                 var json = await File.ReadAllTextAsync(pathToFile,ct);
-                await UniTask.SwitchToMainThread();
-
+                
                 if (string.IsNullOrWhiteSpace(json))
                 {
                     return new T();
                 }
 
+                await UniTask.SwitchToMainThread();
                 return JsonUtility.FromJson<T>(json);
             }
             catch (Exception e)

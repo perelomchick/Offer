@@ -11,11 +11,16 @@ namespace Core.Features.Economy.UI
 
         private Dictionary<TypeResource, ResourceUI> _resourceByType;
 
-        private Dictionary<TypeResource, ResourceUI> ResourceByType =>
-            _resourceByType ??= _invenroInventoryUIElements
-                .ToDictionary(x => x.Type, x => x.ResourceUI);
-        
-        
+        private Dictionary<TypeResource, ResourceUI> ResourceByType
+        {
+            get
+            {
+                return _resourceByType ??= _invenroInventoryUIElements
+                    .ToDictionary(x => x.Type, x => x.ResourceUI);
+            }
+        }
+
+
         public void SetSprite(TypeResource typeResource, Sprite sprite)
         {
             ResourceByType[typeResource].SetSprite(sprite);
